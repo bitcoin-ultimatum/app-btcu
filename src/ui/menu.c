@@ -23,7 +23,7 @@
 
 // We have a screen with the icon and "Bitcoin is ready" for Bitcoin,
 // "Bitcoin Testnet is ready" for Bitcoin Testnet, "Application is ready" for all the altcoins
-UX_STEP_NOCB(ux_menu_ready_step_bitcoin, pnn, {&C_bitcoin_logo, "Bitcoin", "is ready"});
+UX_STEP_NOCB(ux_menu_ready_step_bitcoin, pnn, {&C_btcu_logo, "BTCU", "is ready"});
 UX_STEP_NOCB(ux_menu_ready_step_bitcoin_testnet,
              pnn,
              {&C_bitcoin_logo, "Bitcoin Testnet", "is ready"});

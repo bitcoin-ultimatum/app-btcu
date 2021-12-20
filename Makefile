@@ -36,7 +36,7 @@ APP_STACK_SIZE = 1500
 
 # simplify for tests
 ifndef COIN
-COIN=bitcoin_testnet
+COIN=btcu
 endif
 
 # Custom NanoS linking script to overlap legacy globals and new globals
@@ -98,6 +98,30 @@ DEFINES   += COIN_FLAGS=FLAG_SEGWIT_CHANGE_SUPPORT
 
 APPNAME = "Bitcoin"
 
+##########BTCU############
+else ifeq ($(COIN),btcu)
+
+# we're not using the lib :)
+DEFINES_LIB=
+APP_LOAD_FLAGS=--appFlags 0xa50
+
+# BTCU mainnet
+DEFINES   += BIP32_PUBKEY_VERSION=0x0488B21E
+DEFINES   += BIP44_COIN_TYPE=0
+DEFINES   += BIP44_COIN_TYPE_2=0
+DEFINES   += COIN_P2PKH_VERSION=0
+DEFINES   += COIN_P2SH_VERSION=5
+DEFINES   += COIN_NATIVE_SEGWIT_PREFIX=\"bc\"
+DEFINES   += COIN_FAMILY=1
+DEFINES   += COIN_COINID=\"Btcu\"
+DEFINES   += COIN_COINID_HEADER=\"BTCU\"
+DEFINES   += COIN_COINID_NAME=\"Btcu\"
+DEFINES   += COIN_COINID_SHORT=\"BTCU\"
+DEFINES   += COIN_KIND=COIN_KIND_BITCOIN
+DEFINES   += COIN_FLAGS=FLAG_SEGWIT_CHANGE_SUPPORT
+
+APPNAME = "BTCU"
+################################
 else ifeq ($(COIN),bitcoin_testnet_lib)
 # Bitcoin testnet, but using the library mechanism
 DEFINES   += BIP32_PUBKEY_VERSION=0x00000000 # unused
@@ -577,7 +601,7 @@ APPNAME ="Hydra"
 APP_LOAD_PARAMS += --path "44'/609'"
 else
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
-$(error Unsupported COIN - use bitcoin_testnet, bitcoin, bitcoin_cash, bitcoin_gold, litecoin, dogecoin, dash, zcash, horizen, komodo, stratis, peercoin, pivx, viacoin, vertcoin, stealth, digibyte, qtum, bitcoin_private, firo, gamecredits, zclassic, xsn, nix, lbry, resistance, ravencoin, hydra, hydra_testnet, xrhodium)
+$(error Unsupported COIN - use bitcoin_testnet, bitcoin, btcu, bitcoin_cash, bitcoin_gold, litecoin, dogecoin, dash, zcash, horizen, komodo, stratis, peercoin, pivx, viacoin, vertcoin, stealth, digibyte, qtum, bitcoin_private, firo, gamecredits, zclassic, xsn, nix, lbry, resistance, ravencoin, hydra, hydra_testnet, xrhodium)
 endif
 endif
 
@@ -712,12 +736,12 @@ dep/%.d: %.c Makefile
 ifeq ($(TARGET_NAME),TARGET_NANOX)
 
 listvariants:
-	@echo VARIANTS COIN bitcoin_testnet bitcoin bitcoin_cash bitcoin_gold litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private firo gamecredits zclassic xsn nix lbry ravencoin hydra hydra_testnet xrhodium
+	@echo VARIANTS COIN bitcoin_testnet bitcoin btcu bitcoin_cash bitcoin_gold litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private firo gamecredits zclassic xsn nix lbry ravencoin hydra hydra_testnet xrhodium
 
 else
 
 listvariants:
-	@echo VARIANTS COIN bitcoin_testnet bitcoin bitcoin_cash bitcoin_gold litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private firo gamecredits zclassic xsn nix lbry ravencoin resistance hydra hydra_testnet xrhodium
+	@echo VARIANTS COIN bitcoin_testnet bitcoin btcu bitcoin_cash bitcoin_gold litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private firo gamecredits zclassic xsn nix lbry ravencoin resistance hydra hydra_testnet xrhodium
 
 endif
 
