@@ -1,7 +1,17 @@
 #pragma once
 
 // clang-format off
-
+/**
+ * For BTCU coin need to add definition of PsbtGlobalType (by ifeq ($(COIN),btcu)...#else...#endif) of
+ * PSBT_GLOBAL_VALIDATOR_REG         = 0xB0,
+ * PSBT_GLOBAL_VALIDATOR_VOTE        = 0xB1,
+ *
+ * (sign_psbt.c):
+ * read them in process_global_map and apply to hashing and signing process in
+ * sign_legacy_compute_sighash, sign_segwit_v0
+ * (put between locktime and sighash_type)
+ *
+ * */
 enum PsbtGlobalType {
 	PSBT_GLOBAL_UNSIGNED_TX           = 0x00,
 	PSBT_GLOBAL_XPUB                  = 0x01,

@@ -1461,6 +1461,13 @@ static void sign_legacy_compute_sighash(dispatcher_context_t *dc) {
     write_u32_le(tmp, 0, state->locktime);
     crypto_hash_update(&sighash_context.header, tmp, 4);
 
+    ///////BTCU///////
+//#if COIN == btcu
+   //add two empty bytes of ValidatorReg and ValidatorVote trx fileds
+   memset(tmp, 0, sizeof(tmp)/sizeof(uint8_t));
+   crypto_hash_update(&sighash_context.header, tmp, 2);
+//#endif
+
     // hash type
     write_u32_le(tmp, 0, state->cur_input.sighash_type);
     crypto_hash_update(&sighash_context.header, tmp, 4);
@@ -1847,6 +1854,13 @@ static void sign_segwit_v0(dispatcher_context_t *dc) {
     // nLocktime
     write_u32_le(tmp, 0, state->locktime);
     crypto_hash_update(&sighash_context.header, tmp, 4);
+
+   ///////BTCU///////
+//#if COIN == btcu
+   //add two empty bytes of ValidatorReg and ValidatorVote trx fileds
+   memset(tmp, 0, sizeof(tmp)/sizeof(uint8_t));
+   crypto_hash_update(&sighash_context.header, tmp, 2);
+//#endif
 
     // sighash type
     write_u32_le(tmp, 0, state->cur_input.sighash_type);
