@@ -36,7 +36,7 @@ APP_STACK_SIZE = 1500
 
 # simplify for tests
 ifndef COIN
-COIN=btcu
+COIN=bitcoin_testnet
 endif
 
 # Custom NanoS linking script to overlap legacy globals and new globals

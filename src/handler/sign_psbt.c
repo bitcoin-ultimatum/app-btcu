@@ -519,6 +519,8 @@ static void process_input_map(dispatcher_context_t *dc) {
             return;
         }
 
+        ////BTCU: we don't check previous transaction hash because it changed from user mode with validator empty bytes
+#if COIN != btcu
         uint8_t prevout_hash[32];
 
         // check if the prevout_hash of the transaction matches the computed one from the
@@ -536,6 +538,7 @@ static void process_input_map(dispatcher_context_t *dc) {
             SEND_SW(dc, SW_INCORRECT_DATA);
             return;
         }
+#endif
 
         uint64_t prevout_value = parser_outputs.vout_value;
 
@@ -1462,11 +1465,11 @@ static void sign_legacy_compute_sighash(dispatcher_context_t *dc) {
     crypto_hash_update(&sighash_context.header, tmp, 4);
 
     ///////BTCU///////
-//#if COIN == btcu
+#if COIN == btcu
    //add two empty bytes of ValidatorReg and ValidatorVote trx fileds
    memset(tmp, 0, sizeof(tmp)/sizeof(uint8_t));
    crypto_hash_update(&sighash_context.header, tmp, 2);
-//#endif
+#endif
 
     // hash type
     write_u32_le(tmp, 0, state->cur_input.sighash_type);
@@ -1856,11 +1859,11 @@ static void sign_segwit_v0(dispatcher_context_t *dc) {
     crypto_hash_update(&sighash_context.header, tmp, 4);
 
    ///////BTCU///////
-//#if COIN == btcu
+#if COIN == btcu
    //add two empty bytes of ValidatorReg and ValidatorVote trx fileds
    memset(tmp, 0, sizeof(tmp)/sizeof(uint8_t));
    crypto_hash_update(&sighash_context.header, tmp, 2);
-//#endif
+#endif
 
     // sighash type
     write_u32_le(tmp, 0, state->cur_input.sighash_type);
